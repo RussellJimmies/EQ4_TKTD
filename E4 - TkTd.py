@@ -112,10 +112,14 @@ class Vue():
 
     def afficher_partie(self):
 
-        self.canevas.create_polygon(0,200, 240,200, 240,50, 840,50, 840,440, 1200,440, 1200,590, 840,590, 690,590,
-                                    690,440, 690,200, 390,200, 390,350, 240,350, 0,350,
+        self.canevas.create_polygon(0,275, 315,275, 315,50, 840,50, 840,440, 1200,440, 1200,515, 840,515, 765,515,
+                                    765,440, 765,125, 390,125, 390,350, 240,350, 0,350,
                                     fill="#51361a", tags=("poteau"))
 
+        # self.canevas.create_polygon(0,200, 240,200, 240,50, 840,50, 840,440, 1200,440, 1200,590, 840,590, 690,590,
+        #                             690,440, 690,200, 390,200, 390,350, 240,350, 0,350,
+        #                             fill="#51361a", tags=("poteau"))
+        self.canevas.create_oval(100,100,50,50, fill="darkred")
 
 
 
@@ -129,9 +133,15 @@ class Modele():
         self.duree = 0
         self.pion = Pion(self)
         self.poteau = Cadre(self)
-        self.sentinelles = []
+        self.creeps = []
+        self.deplacements = [
+            [0,312.5 ] ,[202.5,312.5 ],
+            [202.5, 87.5], [802.5, 87.5],
+            [802.5, 475.5], []
+        ]
 
-
+    def creer_creep(self):
+        self.creeps.append(Creeps(self, 0, 312.5, 30, 30, 5, -5))
 
 
 ##################################################################################
@@ -139,12 +149,15 @@ class Modele():
 
 
 class Creeps():
-    def __init__(self):
+    def __init__(self, parent, x, y, vitesse_creep_X, vitesse_creep_Y, rayon):
+        self.parent = parent
         self.vie_creep = 0
-        self.position_x_creep = 0
-        self.position_y_creep = 0
+        self.x = x
+        self.y = y
         self.valeur_monetaire_creep = 0
-        self.vitesse_creep=0
+        self.vitesse_creep_X= vitesse_creep_X
+        self.vitesse_creep_Y= vitesse_creep_Y
+        self.rayon = rayon
 
         self.est_cible = False
         self.est_vivant = False
