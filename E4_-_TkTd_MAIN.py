@@ -12,7 +12,7 @@ class Vue():
         self.modele = self.parent.modele
         self.root = Tk()
         self.root.geometry("1200x900")
-        self.root.title("Carre Rouge, Vers1.0")
+        self.root.title("TKTD, Vers1.0")
         self.creer_interface()
 
     def creer_interface(self):
@@ -122,6 +122,8 @@ class Vue():
 
     def afficher_partie(self):
 
+        self.canevas.delete("creeps")
+
         for i in self.modele.sentier[0]:
             self.canevas.create_line(i,width = 40, fill = "brown", tags=("sentier",))
 
@@ -135,7 +137,7 @@ class Vue():
             x = i.x1
             y = i.y1
 
-            self.canevas.create_oval(i.x1-i.rayon, i.y1-i.rayon, i.x1+i.rayon, i.y1+i.rayon, fill=i.couleur)
+            self.canevas.create_oval(i.x1-i.rayon, i.y1-i.rayon, i.x1+i.rayon, i.y1+i.rayon, fill=i.couleur, tags=("creeps",))
 
 
 
