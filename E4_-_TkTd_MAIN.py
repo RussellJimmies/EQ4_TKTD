@@ -2,7 +2,7 @@ import tkinter.messagebox
 from tkinter import *
 from tkinter import simpledialog
 import time
-import helper
+from helper import *
 
 
 
@@ -122,7 +122,7 @@ class Vue():
 
     def afficher_partie(self):
 
-        self.canevas.delete("creeps")
+        self.canevas.delete("dynamique")
 
         for i in self.modele.sentier[0]:
             self.canevas.create_line(i,width = 40, fill = "brown", tags=("sentier",))
@@ -137,7 +137,7 @@ class Vue():
             x = i.x1
             y = i.y1
 
-            self.canevas.create_oval(i.x1-i.rayon, i.y1-i.rayon, i.x1+i.rayon, i.y1+i.rayon, fill=i.couleur, tags=("creeps",))
+            self.canevas.create_oval(i.x1-i.rayon, i.y1-i.rayon, i.x1+i.rayon, i.y1+i.rayon, fill=i.couleur, tags=("dynamique",))
 
 
 
@@ -290,15 +290,15 @@ class Tour():
         self.placement_valide= False
 
     def verification_range(self):
-        pass
-        # liste = self.parent.creeps
-        # for i in liste:  ##ici on prendra la liste creep active.
-        #     print("i.x :", i.x)
-        #     distance =Helper.calcDistance(i.x,i.y,self.position_x_tour,self.position_y_tour)
-        #     somme_rayon = i.rayon + self.rayon
-        #     if distance <= somme_rayon :
-        #         i.est_cible = True
-        #         print ("le creep est ciblé")
+
+        liste = self.parent.list
+        for i in liste:  ##ici on prendra la liste creep active.
+        #print("i.x :", i.x1)
+            distance =Helper.calcDistance(i.x1,i.y1,self.position_x_tour,self.position_y_tour)
+            somme_rayon = i.rayon + self.rayon
+            if distance <= somme_rayon :
+                i.est_cible = True
+                print ("le creep est ciblé")
 
 
     def tirer_creep(self):
@@ -376,6 +376,9 @@ class Controleur():
 
         for i in self.modele.list:
             i.deplacement()
+
+        for i in self.modele.liste_tours:
+            i.verification_range()
 
         self.vue.afficher_partie()
 
