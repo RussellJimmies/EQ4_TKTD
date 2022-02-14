@@ -61,10 +61,11 @@ class Vue():
 
 
 
-        btn_tour_jaune = Button(frame_bouttons_row1, text="TOUR JAUNE", width=20)
+        btn_tour_jaune = Button(frame_bouttons_row1, text="TOUR BLEUE", width=20)
 
-        btn_tour_vert = Button(frame_bouttons_row1, text="TOUR VERTE", width=20)
-        btn_tour_rouge = Button(frame_bouttons_row1, text="TOUR ROUGE", width=20)
+        btn_tour_vert = Button(frame_bouttons_row1, text="TOUR MAUVE", width=20)
+        btn_tour_rouge = Button(frame_bouttons_row1, text="TOUR BLANCHE", width=20)
+        btn_debuter_partie = Button(frame_bouttons_row1, text="DÉBUTER PARTIE", width=20)
 
 
 
@@ -86,6 +87,7 @@ class Vue():
         btn_tour_jaune.pack(side=LEFT, fill=X)
         btn_tour_rouge.pack(side=LEFT, fill=X)
         btn_tour_vert.pack(side=LEFT, fill=X)
+        btn_debuter_partie.pack(side=LEFT, fill=X, expand=1)
         frame_bouttons_row1.pack( fill=X, side=TOP)
 
 
@@ -95,6 +97,7 @@ class Vue():
         #self.canevas.tag_bind("pion", "<Button>", self.debuter_partie)
 
         self.canevas.bind("<Button-1>", self.creer_tour_bleu)
+        btn_debuter_partie.bind("<Button-1>", self.parent.debuter_partie)
 
         # visualiser
 
@@ -104,7 +107,7 @@ class Vue():
         self.frame_bas.pack(expand=1, fill=BOTH)
 
 
-        self.afficher_partie()
+        #self.afficher_partie()
 
     def creer_tour_bleu(self, evt):
         tour_creee = self.parent.creer_tour_bleu()
@@ -133,7 +136,7 @@ class Vue():
 
         #                     posx1 , posy1 , posx2 ,posy2
 
-        for i in self.modele.list:
+        for i in self.modele.partie.niveau.liste_creep_a_l_ecran:
             x = i.x1
             y = i.y1
 
@@ -143,9 +146,9 @@ class Vue():
 
 class Modele():
     def __init__(self, parent):
-        self.nombre_Waves = [1]
+
         self.parent = parent
-        #self.partie =
+        self.partie = None  #Partie(self)
         self.sentier =  [[
                         [[0,275],[240,275]],
                         [[240, 275], [240,50]],
@@ -162,17 +165,17 @@ class Modele():
         self.debut = None
         self.duree = 0
 
-        self.creeps = Creeps(parent)
+        # self.creeps = Creeps(parent)
 
-        self.list = []
-        self.creeps = []
-        self.ajouter_creeps_list()
 
         self.liste_tours = []
 
-    def ajouter_creeps_list(self):
-        for i in self.nombre_Waves:
-            self.list.append(Creeps(self))
+
+
+    def creer_partie(self):
+        self.partie = Partie(self)
+        print("Partie créée")
+
 
 
     def creer_tour_bleu(self):
@@ -181,14 +184,118 @@ class Modele():
         self.liste_tours.append(tour_creee)
         return tour_creee
 
+    def jouer_tour(self):
+        self.partie.jouer_tour()
+
+
+class Partie():
+    def __init__(self,parent):
+        self.parent = parent
+        self.total_creep_tues = 0
+        self.total_points = 0
+        self.total_vie = 100
+        self.total_argent = 1000
+        self.total_sagesse = 0
+        self.niveau_actuel = 0
+        self.niveau = Niveau(self, self.niveau_actuel )
+
+
+
+
+
+    def creer_niveau(self, evt ):
+        self.niveau_actuel += 1
+        self.niveau = Niveau(self, self.niveau_actuel)
+        self.niveau.creer_creep()
+
+
+    def jouer_tour(self):
+        self.niveau.jouer_tour()
+
+
+class Niveau():
+    def __init__(self, parent, niveau_actuel):
+        self.parent = parent
+        self.niveau_actuel = niveau_actuel
+        self.ratio_creep = 50.0
+        self.nombre_creep_total = self.ratio_creep * self.niveau_actuel
+        self.liste_creep_attente = []
+        self.liste_creep_a_l_ecran = []
+        self.niveau_est_parfait = True
+        self.bonus_niveau_parfait = 50
+        self.sagesse_du_niveau = 50 * self.niveau_actuel
+        self.ratio_creep_vert = 0.9
+        self.ratio_creep_jaune = 0.1
+        self.ratio_creep_rouge = 0.0
+        # self.creeps = Creeps(parent)
+        self.delai = 0
+        self.delai_nouveau_creep = 20
+        self.creer_creeps()
+
+
+    def jouer_tour(self):
+        for i in self.liste_creep_a_l_ecran:
+            i.jouer_tour()
+
+        if self.delai < 1:
+            if self.liste_creep_attente:
+                rep = self.liste_creep_attente.pop(0)
+                self.liste_creep_a_l_ecran.append(rep)
+                self.delai = self.delai_nouveau_creep
+        else:
+            self.delai -= 1
+
+    def creer_creeps(self):
+        #
+        # if self.ratio_creep_vert > 0:
+        #     for i in range (int (self.ratio_creep * self.ratio_creep_vert)):
+        #         self.liste_creep_attente.append(Creeps_vert())
+        #
+        # for i in range(int(self.ratio_creep * self.ratio_creep_jaune)):
+        #     self.liste_creep_attente.append(Creeps_jaune())
+        #
+        # for i in range(int (self.ratio_creep * self.ratio_creep_rouge)):
+        #     self.liste_creep_attente.append(Creeps_rouge())
+
+        for i in range(10):
+            self.liste_creep_attente.append(Creep(self))
+
+        self.ratio_creep_vert -= 0.05
+        self.ratio_creep_jaune += 0.1
+        self.ratio_creep_rouge += 0.05
+
+
+    def incrementer_niveau(self, evt):
+        if len(self.liste_creep_attente) <= 0 and len(self.liste_creep_a_l_ecran) <= 0:
+            self.niveau_actuel += 1
+
+
+    def mettre_creeps_en_jeu(self):
+        if len(self.liste_creep_attente) >= 0:
+            tmp = self.liste_creep_attente.pop(0)
+            self.liste_creep_a_l_ecran.append(tmp)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##################################################################################
 #classes par William C et sebastian P
 
 
-class Creeps():
+class Creep():
     def __init__(self,parent):
         self.parent = parent
-        self.vie_creep = 0
+        self.vie_creep = 42
         self.x1 = 0
         self.y1 = 275
         self.rayon = 15
@@ -203,6 +310,7 @@ class Creeps():
         self.max4 = 505
         self.max5 = 1210
 
+
         self.couleur = "green"
         self.est_cible = False
         self.est_vivant = False
@@ -210,23 +318,25 @@ class Creeps():
         self.faiblesse_a = False
         self.faiblesse_b = False
         self.faiblesse_c = False
+        #self.creep_vert = Creeps_vert(self)
 
-
+    def jouer_tour(self):
+        self.deplacement()
 
     def deplacement(self):
 
-        if self.troncon < len(self.parent.sentier):
 
-            if self.x1 < self.max1:
-                self.x1 += self.vitesse_creep_X
-            elif self.x1 >= self.max1 and self.y1 >= self.max2 and self.x1 < 400:
-                self.y1 -= self.vitesse_creep_Y
-            elif self.y1 <= self.max2 and self.x1 <= self.max3:
-                self.x1 += self.vitesse_creep_X
-            elif self.x1 >= self.max3 and self.y1 <= self.max4 and self.x1 > 400:
-                self.y1 += self.vitesse_creep_Y
-            elif self.y1 <= self.max3 and self.x1 <= self.max5 and self.x1 > 400:
-                self.x1 += self.vitesse_creep_X
+
+        if self.x1 < self.max1:
+            self.x1 += self.vitesse_creep_X
+        elif self.x1 >= self.max1 and self.y1 >= self.max2 and self.x1 < 400:
+            self.y1 -= self.vitesse_creep_Y
+        elif self.y1 <= self.max2 and self.x1 <= self.max3:
+            self.x1 += self.vitesse_creep_X
+        elif self.x1 >= self.max3 and self.y1 <= self.max4 and self.x1 > 400:
+            self.y1 += self.vitesse_creep_Y
+        elif self.y1 <= self.max3 and self.x1 <= self.max5 and self.x1 > 400:
+            self.x1 += self.vitesse_creep_X
 
 
         # self.objectif_position = [
@@ -240,38 +350,42 @@ class Creeps():
 
 
 
-class Creeps_vert(Creeps):
+class Creep_vert(Creep):
     # la vitesse est a titre indicatif 1 = plus lent 10 = plus vite
     # couleur vert easy one
     def __init__(self):
-        Creeps.__init__(self)
+        Creep.__init__(self, Creep)
         self.vie_creep = 60
         self.valeur_monetaire_creep = 50
         self.vitesse_creep = 4
         self.faiblesse_c = True
+        self.valeur_points = 100
 
 
-class Creeps_jaune(Creeps):
+
+class Creep_jaune(Creep):
     # couleur jaune medium one
     def __init__(self):
-        Creeps.__init__(self)
+        Creep.__init__(self, Creep)
         self.vie_creep = 90
         self.valeur_monetaire_creep = 100
         self.vitesse_creep = 6
         self.faiblesse_a = True
+        self.valeur_points = 200
 
-class Creeps_rouge(Creeps):
+class Creep_rouge(Creep):
     # couleur rouge hard one
     def __init__(self):
-        Creeps.__init__(self)
+        Creep.__init__(self, Creep)
         self.vie_creep = 150
         self.valeur_monetaire_creep = 150
         self.vitesse_creep = 3
         self.faiblesse_a = True
+        self.valeur_points = 300
 
-class Boss(Creeps):
+class Boss(Creep):
     def __init__(self):
-        Creeps.__init__(self)
+        Creep.__init__(self)
         self.vie_creep= 450
         self.valeur_monetaire_creep = 300
 
@@ -363,27 +477,27 @@ class Controleur():
         self.partie_en_cours = 0
         self.modele = Modele(self)
         self.vue = Vue(self)
-        self.debuter_partie()
+        #self.debuter_partie()
         self.vue.root.mainloop()
 
+    def mettre_creeps_en_jeu(self):
+        self.modele.partie.niveau.mettre_creeps_en_jeu()
 
-    def debuter_partie(self):
+    def debuter_partie(self,tt):
         #self.modele.debut = time.time()
         self.partie_en_cours = 1
+        #CREER PARTIE
+        self.modele.creer_partie()
         self.jouer_partie()
 
     def jouer_partie(self):
 
-        for i in self.modele.list:
-            i.deplacement()
-
-        for i in self.modele.liste_tours:
-            i.verification_range()
-
+        self.modele.jouer_tour()
         self.vue.afficher_partie()
-
-
         self.vue.root.after(40, self.jouer_partie)
+
+
+
 
     def creer_tour_bleu(self):
         return self.modele.creer_tour_bleu()
