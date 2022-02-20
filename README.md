@@ -15,7 +15,7 @@ Vous êtes envahis par des ennemis et devez défendre votre planète, vague apr�
 
 Vous êtes la dernière ligne de défense. 
 
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # FONCTIONNEMENT
 En appuyant sur le bouton *DÉBUTER PARTIE* la première vague d'ennemis commence l'envahissement. 
@@ -32,6 +32,6 @@ En détruisant des ennemis, vous gagnez de l'argent qui vous permettera d'achete
 
 Chaque vague détruite vous donnera des points de sagesse, qui permettent de débloquer de nouvelles tours. 
 
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # BUGS CONNUS
