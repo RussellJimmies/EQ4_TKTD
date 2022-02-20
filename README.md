@@ -8,7 +8,7 @@ Version 1.0
 
 Vous êtes envahis par des ennemis et devez défendre votre planète, vague après vague, en utilisant des tours de défense. Si trop d'ennemis traversent le sentier et se rendent à la fin, vous perdez des points de vie. Si vous êtes rendus à 0, vous perdez. 
 
-Vous êtes, la dernière ligne de défense. 
+Vous êtes la dernière ligne de défense. 
 
 
 
