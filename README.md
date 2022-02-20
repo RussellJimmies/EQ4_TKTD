@@ -8,7 +8,7 @@ Version 1.0
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# DESCRIPTION
+# ♦ DESCRIPTION ♦
 *Ceci est la première version du jeu TOWER DEFENSE: BARE BONES EDITION.* 
 
 Vous êtes envahis par des ennemis et devez défendre votre planète, vague après vague, en utilisant des tours de défense. Si trop d'ennemis traversent le sentier et se rendent à la fin, vous perdez des points de vie. Si vous êtes rendus à 0, vous perdez. 
@@ -17,7 +17,7 @@ Vous êtes la dernière ligne de défense.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# FONCTIONNEMENT
+# ♦ FONCTIONNEMENT ♦
 En appuyant sur le bouton *DÉBUTER PARTIE* la première vague d'ennemis commence l'envahissement. 
 
 Pour acheter une tour, pesez le bouton de la tour que vous voulez construire pour l'acheter et cliquez ensuite le long du sentier pour la placer. Chaque ennemi a une tour qui lui fait plus de dommage que les autres. 
@@ -34,4 +34,4 @@ Chaque vague détruite vous donnera des points de sagesse, qui permettent de dé
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# BUGS CONNUS
+# ♦ BUGS CONNUS ♦
