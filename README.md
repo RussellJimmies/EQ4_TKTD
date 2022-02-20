@@ -3,7 +3,6 @@ Nom du programme: EQ4_TKTD.py
 Auteurs:
 
 Date: 19-02-2022
-
 Version 1.0
 
 
