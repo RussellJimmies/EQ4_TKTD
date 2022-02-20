@@ -1,6 +1,6 @@
 Nom du programme: EQ4_TKTD.py
 
-Auteurs:
+Auteurs: William C., Jacques D., William L., Sebastian P. 
 
 Date: 19-02-2022
 
