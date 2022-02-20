@@ -1,7 +1,11 @@
 Nom du programme: EQ4_TKTD.py
+
 Auteurs:
+
 Date: 19-02-2022
+
 Version 1.0
+
 
 # DESCRIPTION
 *Ceci est la première version du jeu TOWER DEFENSE: BARE BONES EDITION.* 
