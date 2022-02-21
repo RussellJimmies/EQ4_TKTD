@@ -20,7 +20,7 @@ Vous êtes la dernière ligne de défense.
 # ♦ FONCTIONNEMENT ♦
 En appuyant sur le bouton *DÉBUTER PARTIE* la première vague d'ennemis commence l'envahissement. 
 
-Pour acheter une tour, pesez le bouton de la tour que vous voulez construire pour l'acheter et cliquez ensuite autour du sentier pour la placer. Chaque ennemi a une tour qui lui fait plus de dommage que les autres. 
+Pour acheter une tour, pesez le bouton de la tour que vous voulez construire et cliquez ensuite autour du sentier pour la placer. Chaque ennemi a une tour qui lui fait plus de dommage que les autres. 
 
 Les vagues deviendront de plus en plus difficiles, puisqu'elles seront de plus en plus populeuses, et que les ennemis plus faibles (Verts) deviendront moins nombreux, alors que les plus forts (Jaunes et Rouges) augmenteront en nombre.
 
@@ -35,6 +35,9 @@ Chaque vague détruite vous donnera des points de sagesse, qui permettent de dé
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # ♦ BUGS CONNUS ♦
-  1. Les ennemis jaunes et rouges ne sont pas détectées par les tours;
+  1. Les derniers ennemis ne sont pas toujours détectés par les tours;
+  2. Lors du même bug (1), certains projectiles deviennent figés à l'écran;
+  3. Lorsque deux tours de même couleur sont placées proche, la vitesse du projectile augmente.
+  
  
 
